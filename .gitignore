@@ -26,4 +26,8 @@ obj/
 .history
 .ionide
 
+### Pastas de projetos exemplos
+ControleAcessoEstrelaDaMorte-master/
+csharp-examples/
+
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudiocode
