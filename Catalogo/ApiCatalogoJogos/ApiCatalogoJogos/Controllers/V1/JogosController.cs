@@ -1,6 +1,6 @@
 ﻿using ApiCatalogoJogos.Models.InputModel;
 using ApiCatalogoJogos.Models.OutputModel;
-using ApiCatalogoJogos.Services.Interfaces;
+using ApiCatalogoJogos.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,19 +15,19 @@ namespace ApiCatalogoJogos.Controllers.V1
     [ApiController]
     public class JogosController : ControllerBase
     {
-        private readonly IJogoService _jogoService;
+        private readonly IJogoRepository _jogoRepository;
 
-        public JogosController(IJogoService jogoService)
+        public JogosController(IJogoRepository jogoRepository)
         {
-            _jogoService = jogoService;
+            _jogoRepository = jogoRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JogoViewModelOutput>>> Obter([FromQuery, Range(1, int.MaxValue)] int pagina = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
         {
-            var jogos = await _jogoService.Obter(pagina, quantidade);
+            var jogos = await _jogoRepository.Obter(pagina, quantidade);
 
-            if (jogos.Count() == 0)
+            if (jogos.Count().Equals(0))
                 return NoContent();
 
             return Ok(jogos);
@@ -36,22 +36,22 @@ namespace ApiCatalogoJogos.Controllers.V1
         [HttpGet("{idJogo:guid}")]
         public async Task<ActionResult<JogoViewModelOutput>> Obter([FromRoute] Guid idJogo)
         {
-            var jogo = await _jogoService.Obter(idJogo);
+            var jogo = await _jogoRepository.Obter(idJogo);
 
-            if (jogo == null)
+            if (jogo.Equals(null))
                 return NoContent();
 
             return Ok(jogo);
         }
 
         [HttpPost]
-        public async Task<ActionResult<JogoViewModelOutput>> InserirJogo([FromBody] JogoViewModelInput JogoViewModelInput)
+        public async Task<ActionResult<JogoViewModelOutput>> InserirJogo([FromBody] JogoViewModelInput JogoInputModel)
         {
             try 
             {
-                var jogo = await _jogoService.Inserir(JogoViewModelInput);
-                
-                return Ok(jogo);
+                await _jogoRepository.Inserir(JogoInputModel);
+
+                return Ok("Cadastrado com sucesso");
             }
             catch (Exception ex)
             {
@@ -64,9 +64,20 @@ namespace ApiCatalogoJogos.Controllers.V1
         {
             try
             {
-                await _jogoService.Atualizar(idJogo, JogoViewModelInput);
+                var jogoUpdate = await _jogoRepository.Obter(idJogo);
+
+                if(!jogoUpdate.Equals(null))
+                {
+                    jogoUpdate.Nome = jogoUpdate.Nome != JogoViewModelInput.Nome && JogoViewModelInput.Nome != null ? JogoViewModelInput.Nome : jogoUpdate.Nome;
+                    jogoUpdate.Produtora = jogoUpdate.Produtora != JogoViewModelInput.Produtora && JogoViewModelInput.Produtora != null ? JogoViewModelInput.Produtora : jogoUpdate.Produtora;
+                    jogoUpdate.Preco = jogoUpdate.Preco != JogoViewModelInput.Preco && JogoViewModelInput.Preco != null ? JogoViewModelInput.Preco : jogoUpdate.Preco;
+                    await _jogoRepository.Atualizar(jogoUpdate);
+                } else
+                {
+                    return BadRequest("Valor de ID do Jogo informado não encontrado!");
+                }
                 
-                return Ok();
+                return Ok("O Jogo foi atualizado com sucesso!");
             }
             catch(Exception ex)
             {
@@ -80,9 +91,19 @@ namespace ApiCatalogoJogos.Controllers.V1
         {
             try
             {
-                await _jogoService.Atualizar(idJogo, preco);
+                var jogoUpdate = await _jogoRepository.Obter(idJogo);
 
-                return Ok();
+                if (!jogoUpdate.Equals(null))
+                {
+                    jogoUpdate.Preco = jogoUpdate.Preco != preco && preco != null ? preco : jogoUpdate.Preco;
+                    await _jogoRepository.Atualizar(jogoUpdate);
+                }
+                else
+                {
+                    return BadRequest("Valor de ID do Jogo informado não encontrado!");
+                }
+
+                return Ok("O Preço do Jogo foi atualizado com sucesso!");
             }
             catch (Exception ex)
             {
@@ -95,8 +116,17 @@ namespace ApiCatalogoJogos.Controllers.V1
         {
             try
             {
-                await _jogoService.Remover(idJogo);
-                return Ok();
+                var existeJogo = await _jogoRepository.Obter(idJogo);
+                if (!existeJogo.Equals(null))
+                {
+                    await _jogoRepository.Remover(idJogo);
+                }
+                else
+                {
+                    return BadRequest("Valor de ID do Jogo informado não encontrado!");
+                }
+                
+                return Ok($"Jogo {existeJogo.Nome} foi deletado com sucesso!");
             }
             catch(Exception ex)
             {
