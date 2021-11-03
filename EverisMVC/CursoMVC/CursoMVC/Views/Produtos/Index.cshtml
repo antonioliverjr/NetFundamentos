@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Categoria.Descricao)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a class="btn-sm btn-primary text-decoration-none" asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a class="btn-sm btn-dark text-decoration-none" asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a class="btn-sm btn-danger text-decoration-none" asp-action="Delete" asp-route-id="@item.id">Delete</a>
             </td>
         </tr>
 }
