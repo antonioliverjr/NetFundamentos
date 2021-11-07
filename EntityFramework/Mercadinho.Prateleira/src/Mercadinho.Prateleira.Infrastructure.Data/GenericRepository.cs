@@ -60,11 +60,6 @@ namespace Mercadinho.Prateleira.Infrastructure.Data
             CancellationToken cancellationToken = default) => await GetAll(filter, orderBy, includeProperties, noTracking, take, skip)
             .ToListAsync(cancellationToken).ConfigureAwait(false);
 
-        public Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", bool noTracking = false, int? take = null, int? skip = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public async ValueTask<TEntity> GetByKeysAsync(CancellationToken cancellationToken = default,
             params object[] Keys) => await _dbSet.FindAsync(Keys, cancellationToken).ConfigureAwait(false);
 

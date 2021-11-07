@@ -21,7 +21,8 @@ namespace Mercadinho.Prateleira.Infrastructure.Data.Contract
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "",
-            bool noTracking = false, int? take = null, int? skip = null);
+            bool noTracking = false, int? take = null, int? skip = null,
+            CancellationToken cancellationToken = default);
         Task<bool> CommitAsync(CancellationToken cancellationToken = default);
     }
 }

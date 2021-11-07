@@ -4,16 +4,33 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Workspace\NetFundamentos\EntityFramework\Mercadinho.Prateleira\src\Mercadinho.Prateleira.API\Mercadinho.Prateleira.API.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Mercadinho.Prateleira.Domain\Mercadinho.Prateleira.Domain.csproj" />
     <ProjectReference Include="..\Mercadinho.Prateleira.Infrastructure.Data\Mercadinho.Prateleira.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Estoque\Command\" />
+    <Folder Include="Application\Estoque\Handler\" />
+    <Folder Include="Application\Estoque\Query\" />
+    <Folder Include="Application\Estoque\Validation\" />
   </ItemGroup>
 
 </Project>
