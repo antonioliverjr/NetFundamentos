@@ -40,16 +40,16 @@
             <response code="200">Categoria excluída com sucesso!</response>
             <response code="400">Erro ao excluir registro, verifique os dados informados...</response>
         </member>
-        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.GetAllEstoque">
+        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.GetProductEstoque(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Retorna todo o Estoque
             </summary>
             <param name="cancellationToken"></param>
             <returns></returns>
-            <response code="204">Não há dados em Estoque para listar...</response>
-            <response code="200">Lista o Estoque cadastrado!</response>
+            <response code="204">Não há dados em Estoque ou Produto cadastro para listar...</response>
+            <response code="200">Lista o Estoque do produto cadastrado!</response>
         </member>
-        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.Create">
+        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.Create(Mercadinho.Prateleira.API.Application.Estoque.Command.CreateEstoqueCommand,System.Threading.CancellationToken)">
             <summary>
             Inserir registro de Estoque
             </summary>
@@ -57,24 +57,6 @@
             <returns></returns>
             <response code="200">Estoque cadastrado com sucesso!</response>
             <response code="400">Erro ao inserir registro, verifique os dados informados...</response>
-        </member>
-        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.Update">
-            <summary>
-            Atualizar registro do Estoque
-            </summary>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-            <response code="200">Estoque atualizado com sucesso!</response>
-            <response code="400">Erro ao atualizar registro, verifique os dados informados...</response>
-        </member>
-        <member name="M:Mercadinho.Prateleira.API.Controllers.EstoqueController.Delete">
-            <summary>
-            Excluir registro do Estoque
-            </summary>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-            <response code="200">Registro excluído com sucesso!</response>
-            <response code="400">Erro ao excluir registro, verifique os dados informados...</response>
         </member>
         <member name="M:Mercadinho.Prateleira.API.Controllers.ProdutoController.GetAllProdutos(System.Threading.CancellationToken)">
             <summary>

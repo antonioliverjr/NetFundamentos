@@ -26,11 +26,4 @@
     <ProjectReference Include="..\Mercadinho.Prateleira.Infrastructure.Data\Mercadinho.Prateleira.Infrastructure.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Estoque\Command\" />
-    <Folder Include="Application\Estoque\Handler\" />
-    <Folder Include="Application\Estoque\Query\" />
-    <Folder Include="Application\Estoque\Validation\" />
-  </ItemGroup>
-
 </Project>
